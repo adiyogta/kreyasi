@@ -30,13 +30,13 @@ import { ActivatedRoute, RouterLink, RouterLinkActive, RouterModule } from '@ang
           <p>{{guestName}}</p>
         </div>
 
-        <button (click)="musicStatus()" [routerLink]="['/'+guestName+'/main']" routerLinkActive="active" class="bg-red-800 text-white px-8 py-3 rounded-full hover:bg-red-900 transition-colors duration-300 mb-8">
+        <button (click)="musicStatus()" [routerLink]="['/'+guestName+'/main']" routerLinkActive="active" class="bg-red-800 text-white px-8 py-3 rounded-full hover:bg-red-900 transition-colors duration-300 mb-8 z-10">
           Open Invitation
         </button>
       </div>
 
       <!-- Frame bawah -->
-      <div class="absolute bottom-0 left-0 right-0 flex justify-between">
+      <div class="absolute bottom-0 left-0 right-0 flex justify-between pointer-events-none">
         <div class="w-24 h-24 bg-contain bg-no-repeat rotate-[270deg]" style="background-image: url('https://res.cloudinary.com/dvqq3izfb/image/upload/v1728056730/frame_1_id5zr5.png')"></div>
         <div class="w-24 h-24 bg-contain bg-no-repeat rotate-180" style="background-image: url('https://res.cloudinary.com/dvqq3izfb/image/upload/v1728056730/frame_1_id5zr5.png')"></div>
       </div>
