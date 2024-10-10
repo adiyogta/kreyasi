@@ -27,7 +27,7 @@ import { ActivatedRoute, RouterLink, RouterLinkActive, RouterModule } from '@ang
         <div class="text-gray-700 mb-4">
           <p class="mb-2">Kepada Yth.</p>
           <p class="mb-2">Bapak/Ibu/Saudara/i</p>
-          <p>Tamu Undangan</p>
+          <p>{{guestName}}</p>
         </div>
 
         <button class="bg-red-800 text-white px-8 py-3 rounded-full hover:bg-red-900 transition-colors duration-300 mb-8">
