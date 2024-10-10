@@ -30,7 +30,7 @@ import { ActivatedRoute, RouterLink, RouterLinkActive, RouterModule } from '@ang
           <p>{{guestName}}</p>
         </div>
 
-        <button class="bg-red-800 text-white px-8 py-3 rounded-full hover:bg-red-900 transition-colors duration-300 mb-8">
+        <button (click)="musicStatus()" [routerLink]="['/'+guestName+'/main']" routerLinkActive="active" class="bg-red-800 text-white px-8 py-3 rounded-full hover:bg-red-900 transition-colors duration-300 mb-8">
           Open Invitation
         </button>
       </div>
