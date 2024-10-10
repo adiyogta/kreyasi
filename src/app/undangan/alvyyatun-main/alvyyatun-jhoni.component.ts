@@ -45,9 +45,9 @@ import { ActivatedRoute, RouterLink, RouterLinkActive, RouterModule } from '@ang
 
   <!-- Desktop Design -->
   <div class="hidden md:block max-w-6xl w-full">
-    <div class="grid grid-cols-12 gap-8 bg-[#FEFBE8] rounded-xl shadow-2xl overflow-hidden outline outline-offset-8 outline-2 outline-[#F7BE84]">
+    <div class="grid grid-cols-12 gap-4 bg-[#FEFBE8] rounded-xl shadow-2xl overflow-hidden outline outline-offset-8 outline-2 outline-[#F7BE84]">
       <!-- Left Section -->
-      <div class="col-span-5 p-12 relative flex items-center">
+      <div class="col-span-7 p-12 relative flex items-center">
         <!-- Frame Ornaments -->
         <div class="absolute top-0 left-0 w-32 h-32 bg-contain bg-no-repeat" 
              style="background-image: url('https://res.cloudinary.com/dvqq3izfb/image/upload/v1728056730/frame_1_id5zr5.png')">
@@ -66,7 +66,7 @@ import { ActivatedRoute, RouterLink, RouterLinkActive, RouterModule } from '@ang
       </div>
 
       <!-- Right Content Section -->
-      <div class="col-span-7 p-12 flex flex-col justify-center relative">
+      <div class="col-span-5 p-12 flex flex-col justify-center relative">
         <!-- Frame Ornaments -->
         <div class="absolute top-0 right-0 w-32 h-32 bg-contain bg-no-repeat rotate-90" 
              style="background-image: url('https://res.cloudinary.com/dvqq3izfb/image/upload/v1728056730/frame_1_id5zr5.png')">
@@ -89,7 +89,7 @@ import { ActivatedRoute, RouterLink, RouterLinkActive, RouterModule } from '@ang
             <p class="text-3xl font-script text-red-800">{{guestName}}</p>
           </div>
 
-          <button (click)="musicStatus()" [routerLink]="['/jhoni-alvyyatun/'+guestName+'/main']" routerLinkActive="active" class="bg-red-800 text-white px-12 py-4 text-xl rounded-full hover:bg-red-900 transition-colors duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all">
+          <button (click)="musicStatus()" [routerLink]="['/jhoni-alvyyatun/'+ guestName +'/main']" routerLinkActive="active" class="bg-red-800 text-white px-12 py-4 text-xl rounded-full hover:bg-red-900 transition-colors duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all">
             Open Invitation
           </button>
         </div>

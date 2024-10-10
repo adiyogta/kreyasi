@@ -11,7 +11,7 @@ export const routes: Routes = [
     { path: 'jhoni-alvyyatun',
         children: [
             // Route default tanpa guestName
-            { path: '', title: 'Jhoni & Alvyyatun', component: AlvyyatunJhoniComponent },
+            { path: '', title: 'Jhoni & Alvyyatun', component: HomeComponent },
 
             // Route dengan guestName
             { path: ':guestName',

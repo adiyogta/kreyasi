@@ -118,7 +118,6 @@ export class BackgroundMusicComponent implements OnInit, OnDestroy {
   isMuted = signal<boolean>(false);
 
   ngOnInit() {
-    console.log('BackgroundMusicComponent initialized');
     if (isPlatformBrowser(this.platformId)) {
       this.audio = new Audio('https://res.cloudinary.com/dxeyja0ob/video/upload/v1728487210/KEMBANG_WANGI_-_VICKY_PRASETYO_Cover_by_Surepman_1_k9roc1.mp3');
       if (this.audio) {
