@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { AlvyyatunJhoniComponent } from './undangan/alvyyatun-main/alvyyatun-jhoni.component';
 import { AlvyyatunMainComponent } from './undangan/alvyyatun-main/alvyyatun-main.component';
+import { GuestManagementComponent } from './undangan/alvyyatun-main/list-tamu.component';
 
 export const routes: Routes = [
     // // Route untuk halaman utama (HomeComponent)
@@ -33,6 +34,8 @@ export const routes: Routes = [
           { path: 'main', title: 'Jhoni & Alvyyatun', component: AlvyyatunMainComponent },
         ]
       },
-      { path: '', component: AlvyyatunJhoniComponent, pathMatch: 'full' }, // Redirect empty path to 404
+      { path: '', component: AlvyyatunJhoniComponent, pathMatch: 'full' },
+      { path: 'list/bikin-link', title: 'Jhoni & Alvyyatun', component: GuestManagementComponent, }, // Redirect empty path to 404
       { path: '**', component: AlvyyatunJhoniComponent } // Catch all invalid routes and redirect to 404
+      
 ];

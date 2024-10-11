@@ -47,7 +47,7 @@ interface Guest {
                   </svg>
                 </span>
               </div>
-              <p class="text-gray-600 text-sm italic transition duration-300 ease-in-out transform hover:scale-105 hover:translate-x-2">"{{ guest.ucapan }}"</p>
+              <p class="text-gray-600 text-sm italic transition duration-300 ease-in-out transform hover:scale-105 hover:translate-x-2 text-wrap">"{{ guest.ucapan }}"</p>
             </div>
           </div>
         </ng-container>
