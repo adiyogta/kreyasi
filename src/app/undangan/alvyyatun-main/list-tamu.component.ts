@@ -57,11 +57,10 @@ interface Guest {
               </div>
               <p class="text-gray-600 text-sm italic mb-2 text-wrap">{{ guest.link }}</p>
               <button 
-                (click)="copyToClipboard(guest.link, 'link')"
-                class="bg-gray-100 hover:bg-gray-300 font-bold text-blue-500 px-2 py-1 rounded text-xs sm:text-sm"
-              >
-                Copy Link
-              </button>
+   (click)="copyToClipboard(guest.nama, guest.link)"
+   class="bg-gray-100 hover:bg-gray-300 font-bold text-blue-500 px-2 py-1 rounded text-xs sm:text-sm">
+   Copy Link
+</button>
             </div>
           </div>
         </ng-container>
@@ -128,22 +127,38 @@ export class GuestManagementComponent implements OnInit, OnDestroy {
     constructor(private http: HttpClient, private applicationRef: ApplicationRef) {}
 // asdsd
 
-    copyToClipboard(text: string, type: 'link' | 'alamat') {
-        navigator.clipboard.writeText(text).then(
-          () => {
-            const message = type === 'link' 
-              ? ' link berhasil disalin, Terima Kasih'
-              : 'Alamat berhasil disalin, Terima Kasih';
-            this.showToastMessage(message, 'success');
-          },
-          (err) => {
-            const message = type === 'link'
-              ? 'Gagal menyalin link'
-              : 'Gagal menyalin alamat';
-            this.showToastMessage(message, 'error');
-          }
-        );
+copyToClipboard(nama: string, link: string) {
+    const message = `
+Assalamu'alaikum Warahmatullahi Wabarakatuh.
+Bismillahirrahmanirrahim.
+Kepada Yth.
+Bapak/Ibu/Saudara/i
+${nama}
+
+Dengan penuh hormat, kami mengundang Bapak/Ibu/Saudara/i untuk menghadiri acara pernikahan kami:
+Alvi & Jhoni
+  
+Informasi lengkap mengenai acara dapat dilihat melalui tautan berikut:
+${link}
+  
+Kami sangat berbahagia apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu.
+Mohon maaf undangan ini hanya disampaikan melalui pesan ini. Terima kasih banyak atas perhatian dan kesediaannya.
+  
+Wassalamu'alaikum Warahmatullahi Wabarakatuh.
+Terima kasih.`;
+  
+    // Gunakan clipboard API untuk menyalin teks ke clipboard
+    navigator.clipboard.writeText(message).then(
+      () => {
+        console.log('Teks undangan berhasil disalin ke clipboard!');
+        alert('Link undangan berhasil disalin ke clipboard!');
+      },
+      (err) => {
+        console.error('Gagal menyalin teks ke clipboard: ', err);
       }
+    );
+  }
+
       showToast = false;
       toastMessage = '';
       toastBackground = '';
