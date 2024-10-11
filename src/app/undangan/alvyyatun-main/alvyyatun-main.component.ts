@@ -5,6 +5,7 @@ import { WeddingGiftComponent } from "./wedding-gift.component";
 import { GuestFormComponent } from "./guest-form.component";
 import { GuestListComponent } from "./guest-list.component";
 import { BackgroundMusicComponent } from "./bgm.component";
+import { FloatingNavComponent } from "./floating-nav.component";
 
 interface TimeLeft {
   days: number;
@@ -16,7 +17,7 @@ interface TimeLeft {
 @Component({
   selector: 'app-alvyyatun-main',
   standalone: true,
-  imports: [CommonModule, WeddingGiftComponent, GuestFormComponent, GuestListComponent, BackgroundMusicComponent],
+  imports: [CommonModule, WeddingGiftComponent, GuestFormComponent, GuestListComponent, BackgroundMusicComponent, FloatingNavComponent],
   templateUrl: './alvyyatun-main.component.html',
   styleUrl: './alvyyatun-main.component.css'
 })
