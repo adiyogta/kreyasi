@@ -121,11 +121,11 @@ export class AlvyyatunMainComponent implements OnInit, OnDestroy{
   // ----galeri----
 
   photos: Array<{url: string, title: string, alt: string}> = [
-    { 
-      "url": "https://res.cloudinary.com/dxeyja0ob/image/upload/v1728400113/IMG_0453_-_Alvyyatun_Fauziah_znxwqg.jpg", 
-      "title": "Photo 1", 
-      "alt": "kreyasi bikin undangan pernikahan template membuat video online digital murah cepat WA link"
-    },
+    // { 
+    //   "url": "https://res.cloudinary.com/dxeyja0ob/image/upload/v1728400113/IMG_0453_-_Alvyyatun_Fauziah_znxwqg.jpg", 
+    //   "title": "Photo 1", 
+    //   "alt": "kreyasi bikin undangan pernikahan template membuat video online digital murah cepat WA link"
+    // },
     { 
       "url": "https://res.cloudinary.com/dxeyja0ob/image/upload/v1728308218/1727481278154_-_Alvyyatun_Fauziah_dfolcf.jpg", 
       "title": "Photo 2", 

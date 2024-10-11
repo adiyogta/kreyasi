@@ -20,9 +20,9 @@ import { ActivatedRoute, RouterLink, RouterLinkActive, RouterModule } from '@ang
         </div>
 
         <h1 class="text-xl font-serif text-brown-800 mt-4 mb-2">THE WEDDING OF</h1>
-        <h2 class="text-4xl font-script text-red-800 mb-0">Jhoni</h2>
+        <h2 class="text-4xl font-script text-red-800 mb-0">Alvi</h2>
         <h2 class="text-2xl font-script text-red-800 mb-0">&</h2>
-        <h2 class="text-4xl font-script text-red-800 mb-4">Alvyyatun</h2>
+        <h2 class="text-4xl font-script text-red-800 mb-4">Jhoni</h2>
 
         <div class="text-gray-700 mb-4">
           <p class="mb-2">Kepada Yth.</p>
@@ -79,9 +79,9 @@ import { ActivatedRoute, RouterLink, RouterLinkActive, RouterModule } from '@ang
         <div class="max-w-xl mx-auto text-center">
           <h1 class="text-3xl font-serif text-brown-800 mb-4">THE WEDDING OF</h1>
           
-          <h2 class="text-6xl font-script text-red-800 mb-0">Jhoni</h2>
+          <h2 class="text-6xl font-script text-red-800 mb-0">Alvi</h2>
           <h2 class="text-4xl font-script text-red-800 mb-0">&</h2>
-          <h2 class="text-6xl font-script text-red-800 mb-4">Alvyyatun</h2>
+          <h2 class="text-6xl font-script text-red-800 mb-4">Jhoni</h2>
           
           <div class="my-8 p-8 border-t border-b border-[#F7BE84]">
             <p class="text-2xl text-gray-700 mb-4">Kepada Yth.</p>
