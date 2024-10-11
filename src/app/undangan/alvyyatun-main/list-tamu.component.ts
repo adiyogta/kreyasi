@@ -126,7 +126,7 @@ export class GuestManagementComponent implements OnInit, OnDestroy {
     @Output() formSubmitted = new EventEmitter<void>();
   
     constructor(private http: HttpClient, private applicationRef: ApplicationRef) {}
-
+// asdsd
 
     copyToClipboard(text: string, type: 'link' | 'alamat') {
         navigator.clipboard.writeText(text).then(
