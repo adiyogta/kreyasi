@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterLink, RouterLinkActive, RouterModule } from '@angular/router';
+import { isPlatformBrowser } from '@angular/common';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { ActivatedRoute, Router, RouterLink, RouterLinkActive, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-alvyyatun-jhoni',
@@ -32,7 +33,7 @@ import { ActivatedRoute, RouterLink, RouterLinkActive, RouterModule } from '@ang
 
             <!-- Button wrapper for better positioning -->
             <div class="relative z-20 mt-2">
-              <button (click)="musicStatus()" [routerLink]="['/'+guestName+'/main']" routerLinkActive="active" 
+            <button (click)="openInvitation()" 
                       class="bg-red-800 text-white px-4 py-2 rounded-full hover:bg-red-900 transition-colors duration-300 
                              shadow-lg hover:shadow-xl transform hover:-translate-y-1 active:translate-y-0">
                 Open Invitation
@@ -163,14 +164,45 @@ import { ActivatedRoute, RouterLink, RouterLinkActive, RouterModule } from '@ang
 export class AlvyyatunJhoniComponent implements OnInit {
   guestName: string | null = null;
   isPlaying = true;
+  isOlderIphone = false;
 
   musicStatus() {
     localStorage.setItem('shouldPlayMusic', this.isPlaying ? 'true' : 'false');
   }
 
-  constructor(private readonly route: ActivatedRoute) {}
+  constructor(private readonly route: ActivatedRoute,private readonly router: Router,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {}
 
   ngOnInit() {
     this.guestName = this.route.snapshot.paramMap.get('guestName');
+    if (isPlatformBrowser(this.platformId)) {
+      this.detectDevice();
+    }
+  }
+
+  detectDevice() {
+    const userAgent = navigator.userAgent;
+    const iphone7RegEx = /iPhone OS (7|8|9|10|11|12|13)_/i;
+    this.isOlderIphone = iphone7RegEx.test(userAgent);
+  }
+
+  openInvitation() {
+    this.musicStatus();
+    if (this.isOlderIphone) {
+      // For older iPhones, use window.location.href
+      window.location.href = `https://jhonialvyyatun.kreyasi.my.id/${this.guestName}/main`;
+    } else {
+      // For newer devices, use Angular routing
+      if (this.guestName) {
+        this.router.navigate([`/${this.guestName}/main`]);
+      } else {
+        // Handle the case where guestName is null
+        console.error('Guest name is null');
+        // You might want to navigate to a default page or show an error message
+        this.router.navigate(['/error']);
+      }
+    }
   }
 }
+
