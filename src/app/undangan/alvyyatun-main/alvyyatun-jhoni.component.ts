@@ -11,7 +11,7 @@ import { ActivatedRoute, RouterLink, RouterLinkActive, RouterModule } from '@ang
     <div class="relative">
       
       <!-- Konten utama dengan padding untuk menghindari tumpang tindih dengan frame -->
-      <div class="relative text-center pt-16 px-4">
+      <div class="relative text-center pt-16 px-4 pb-24"> <!-- Tambahkan padding-bottom di sini -->
         <div class="flex justify-center">
           <div 
             class="w-48 h-48 bg-no-repeat bg-cover bg-center rounded-t-full border-4 border-[#58010F]/20"
@@ -30,7 +30,7 @@ import { ActivatedRoute, RouterLink, RouterLinkActive, RouterModule } from '@ang
           <p>{{guestName}}</p>
         </div>
 
-        <button (click)="musicStatus()" [routerLink]="['/'+guestName+'/main']" routerLinkActive="active" class="bg-red-800 text-white px-8 py-3 rounded-full hover:bg-red-900 transition-colors duration-300 mb-8 z-10">
+        <button (click)="musicStatus()" [routerLink]="['/'+guestName+'/main']" routerLinkActive="active" class="bg-red-800 text-white px-8 py-3 rounded-full hover:bg-red-900 transition-colors duration-300 mb-8 z-10 relative">
           Open Invitation
         </button>
       </div>
