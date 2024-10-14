@@ -170,7 +170,7 @@ import { ActivatedRoute, Router, RouterLink, RouterLinkActive, RouterModule } fr
   `
 })
 export class AlvyyatunJhoniComponent implements OnInit {
-  guestName: string | null = null;
+  guestName: string | null = "Nama Tamu";
   isPlaying = true;
   isOlderIphone = false;
 
@@ -208,7 +208,7 @@ export class AlvyyatunJhoniComponent implements OnInit {
         // Handle the case where guestName is null
         console.error('Guest name is null');
         // You might want to navigate to a default page or show an error message
-        this.router.navigate(['/error']);
+        this.router.navigate(['/Nama Tamu']);
       }
     }
   }
