@@ -1,5 +1,5 @@
 import { isPlatformBrowser } from '@angular/common';
-import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID, ElementRef, Renderer2 } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink, RouterLinkActive, RouterModule } from '@angular/router';
 
 @Component({
@@ -33,19 +33,11 @@ import { ActivatedRoute, Router, RouterLink, RouterLinkActive, RouterModule } fr
 
             <!-- Button wrapper for better positioning -->
             <div class="relative z-20 mt-2">
-          @if (isOlderIphone) {
-            <a [href]="'https://jhonialvyyatun.kreyasi.my.id/' + guestName + '/main'"
-               class="inline-block bg-red-800 text-white px-4 py-2 rounded-full hover:bg-red-900 transition-colors duration-300 
-                      shadow-lg hover:shadow-xl transform hover:-translate-y-1 active:translate-y-0">
-              Open Invitation
-            </a>
-          } @else {
-            <button (click)="openInvitation()" 
-                    class="bg-red-800 text-white px-4 py-2 rounded-full hover:bg-red-900 transition-colors duration-300 
-                           shadow-lg hover:shadow-xl transform hover:-translate-y-1 active:translate-y-0">
-              Open Invitation
-            </button>
-          }
+          <a #invitationLink
+             class="inline-block bg-red-800 text-white px-4 py-2 rounded-full hover:bg-red-900 transition-colors duration-300 
+                    shadow-lg hover:shadow-xl transform hover:-translate-y-1 active:translate-y-0">
+            Open Invitation
+          </a>
         </div>
           </div>
 
@@ -172,45 +164,70 @@ import { ActivatedRoute, Router, RouterLink, RouterLinkActive, RouterModule } fr
 export class AlvyyatunJhoniComponent implements OnInit {
   guestName: string | null = "Nama Tamu";
   isPlaying = true;
-  isOlderIphone = false;
+  isOlderDevice = false;
 
   musicStatus() {
     localStorage.setItem('shouldPlayMusic', this.isPlaying ? 'true' : 'false');
   }
 
-  constructor(private readonly route: ActivatedRoute,private readonly router: Router,
-    @Inject(PLATFORM_ID) private platformId: Object
+  constructor(
+    private readonly route: ActivatedRoute,
+    private readonly router: Router,
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private elementRef: ElementRef,
+    private renderer: Renderer2
   ) {}
 
   ngOnInit() {
     this.guestName = this.route.snapshot.paramMap.get('guestName');
     if (isPlatformBrowser(this.platformId)) {
       this.detectDevice();
+      this.setupInvitationLinks();
     }
   }
 
   detectDevice() {
     const userAgent = navigator.userAgent;
-    const olderIphoneRegEx = /iPhone OS (7|8|9|10|11|12|13)_/i;
-    this.isOlderIphone = olderIphoneRegEx.test(userAgent);
+    const oldDeviceRegEx = /(?:iPhone OS (7|8|9|10|11|12|13)_|Android 4\.|Android 5\.|Android 6\.|Android 7\.|Android 8\.|Android 9\.)/i;
+    this.isOlderDevice = oldDeviceRegEx.test(userAgent);
+  }
+
+  setupInvitationLinks() {
+    const invitationLink = this.elementRef.nativeElement.querySelector('#invitationLink');
+    const invitationLinkDesktop = this.elementRef.nativeElement.querySelector('#invitationLinkDesktop');
+
+    if (this.isOlderDevice) {
+      this.setupLink(invitationLink);
+      this.setupLink(invitationLinkDesktop);
+    } else {
+      this.setupClickHandler(invitationLink);
+      this.setupClickHandler(invitationLinkDesktop);
+    }
+  }
+
+  setupLink(element: HTMLElement | null) {
+    if (element) {
+      this.renderer.setAttribute(element, 'href', `https://jhonialvyyatun.kreyasi.my.id/${this.guestName}/main`);
+      this.musicStatus();
+    }
+  }
+
+  setupClickHandler(element: HTMLElement | null) {
+    if (element) {
+      this.renderer.listen(element, 'click', (event) => {
+        event.preventDefault();
+        this.openInvitation();
+      });
+    }
   }
 
   openInvitation() {
     this.musicStatus();
-    if (this.isOlderIphone) {
-      // For older iPhones, use window.location.href
-      window.location.href = `https://jhonialvyyatun.kreyasi.my.id/${this.guestName}/main`;
+    if (this.guestName) {
+      this.router.navigate([`/${this.guestName}/main`]);
     } else {
-      // For newer devices, use Angular routing
-      if (this.guestName) {
-        this.router.navigate([`/${this.guestName}/main`]);
-      } else {
-        // Handle the case where guestName is null
-        console.error('Guest name is null');
-        // You might want to navigate to a default page or show an error message
-        this.router.navigate(['/Nama Tamu']);
-      }
+      console.error('Guest name is null');
+      this.router.navigate(['/error']);
     }
-  }
 }
-
+}
