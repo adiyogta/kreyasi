@@ -6,6 +6,10 @@ import { GuestFormComponent } from "./guest-form.component";
 import { GuestListComponent } from "./guest-list.component";
 import { BackgroundMusicComponent } from "./bgm.component";
 import { FloatingNavComponent } from "./floating-nav.component";
+import { AlvyyatunJhoniComponent } from "./alvyyatun-jhoni.component";
+import { ActivatedRoute } from '@angular/router';
+import { trigger, state, style, animate, transition } from '@angular/animations';
+
 
 interface TimeLeft {
   days: number;
@@ -17,21 +21,34 @@ interface TimeLeft {
 @Component({
   selector: 'app-alvyyatun-main',
   standalone: true,
-  imports: [CommonModule, WeddingGiftComponent, GuestFormComponent, GuestListComponent, BackgroundMusicComponent, FloatingNavComponent],
+  imports: [CommonModule, WeddingGiftComponent, GuestFormComponent, GuestListComponent, BackgroundMusicComponent, FloatingNavComponent, AlvyyatunJhoniComponent],
   templateUrl: './alvyyatun-main.component.html',
-  styleUrl: './alvyyatun-main.component.css'
+  styleUrl: './alvyyatun-main.component.css',
+  animations: [
+    trigger('fade', [
+      state('void', style({ opacity: 0 })),
+      transition(':enter', [
+        animate(300, style({ opacity: 1 })),
+      ]),
+      transition(':leave', [
+        animate(300, style({ opacity: 0 })),
+      ])
+    ])
+  ]
 })
 export class AlvyyatunMainComponent implements OnInit, OnDestroy{
   private platformId = inject(PLATFORM_ID);
   private intervalId: number | null = null;
   private readonly targetDate = new Date('2024-10-19T08:00:00+07:00'); // Sesuai dengan tanggal akad
-
+  guestName: string | null = "Nama Tamu";
+  isPlaying = true;
+  isOlderIphone = false;
   // animasi
   // animasi
   animations = ['fadeInUp', 'fadeInLeft', 'fadeInRight', 'zoomIn', 'bounceIn'];
 
   @ViewChildren('animatedItem') animatedItems!: QueryList<ElementRef>;
-  constructor(private renderer: Renderer2) {}
+  constructor(private renderer: Renderer2,private readonly route: ActivatedRoute) {}
 
   ngAfterViewInit() {
     if (isPlatformBrowser(this.platformId)) {
@@ -81,12 +98,14 @@ export class AlvyyatunMainComponent implements OnInit, OnDestroy{
   });
 
   ngOnInit() {
+    this.guestName = this.route.snapshot.paramMap.get('guestName');
     if (isPlatformBrowser(this.platformId)) {
       this.calculateTimeLeft();
       this.intervalId = window.setInterval(() => {
         this.calculateTimeLeft();
       }, 1000);
     }
+    this.showModalPage = true;
   }
 
   ngOnDestroy() {
@@ -179,6 +198,13 @@ export class AlvyyatunMainComponent implements OnInit, OnDestroy{
     }
   ]
   ;
+
+  showModalPage: boolean = false;
+
+  closeModal2(): void {
+    this.showModalPage = false;
+  }
+
   showModal = false;
   currentIndex = 0;
 

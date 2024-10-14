@@ -113,7 +113,7 @@ export class BackgroundMusicComponent implements OnInit, OnDestroy {
   private visibilityHandler: (() => void) | null = null;
   private previousVolume = 1;
 
-  isPlaying = signal<boolean>(false);
+  isPlaying = signal<boolean>(true);
   volume = signal<number>(1);
   isMuted = signal<boolean>(false);
 
@@ -124,8 +124,8 @@ export class BackgroundMusicComponent implements OnInit, OnDestroy {
         this.audio.loop = true;
         this.audio.volume = this.volume();
       }
-      const shouldPlayMusicStr = localStorage.getItem('shouldPlayMusic');
-      this.isPlaying.set(shouldPlayMusicStr === 'true');
+      this.playAudio();
+
   
       if (this.isPlaying()) {
         this.playAudio();

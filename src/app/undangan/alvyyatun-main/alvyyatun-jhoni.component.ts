@@ -1,13 +1,13 @@
-import { isPlatformBrowser } from '@angular/common';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink, RouterLinkActive, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-alvyyatun-jhoni',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive, RouterModule],
-  template:`
-<div class="min-h-screen bg-img bg-[#58010F] flex items-center justify-center p-6 md:p-8">
+  imports: [CommonModule,RouterLink, RouterLinkActive, RouterModule],
+  template:`<div *ngIf="showModalPage" class="fixed min-w-screen inset-0 z-50 items-center justify-center bg-black/50">
+<div  class="min-h-screen bg-img bg-[#58010F] flex items-center justify-center p-6 md:p-8">
       <!-- Mobile Design -->
       <div class="md:hidden max-w-md w-full bg-[#FEFBE8] outline outline-offset-4 outline-1 outline-[#F7BE84] rounded-t-full shadow-xl overflow-hidden">
         <div class="relative">
@@ -33,19 +33,12 @@ import { ActivatedRoute, Router, RouterLink, RouterLinkActive, RouterModule } fr
 
             <!-- Button wrapper for better positioning -->
             <div class="relative z-20 mt-2">
-          @if (isOlderIphone) {
-            <a [href]="'https://jhonialvyyatun.kreyasi.my.id/' + guestName + '/main'"
-               class="inline-block bg-red-800 text-white px-4 py-2 rounded-full hover:bg-red-900 transition-colors duration-300 
-                      shadow-lg hover:shadow-xl transform hover:-translate-y-1 active:translate-y-0">
-              Open Invitation
-            </a>
-          } @else {
-            <button (click)="openInvitation()" 
+            <button (click)="closeModal2()" 
                     class="bg-red-800 text-white px-4 py-2 rounded-full hover:bg-red-900 transition-colors duration-300 
                            shadow-lg hover:shadow-xl transform hover:-translate-y-1 active:translate-y-0">
               Open Invitation
             </button>
-          }
+         
         </div>
           </div>
 
@@ -104,7 +97,7 @@ import { ActivatedRoute, Router, RouterLink, RouterLinkActive, RouterModule } fr
               </div>
 
               <div class="relative z-30"> <!-- Button wrapper with higher z-index -->
-                <button (click)="musicStatus()" [routerLink]="['/'+guestName+'/main']" routerLinkActive="active" 
+                <button (click)="closeModal2()"
                         class="bg-red-800 text-white px-12 py-4 text-xl rounded-full hover:bg-red-900 transition-colors duration-300 
                                shadow-lg hover:shadow-xl transform hover:-translate-y-1 active:translate-y-0">
                   Open Invitation
@@ -114,6 +107,7 @@ import { ActivatedRoute, Router, RouterLink, RouterLinkActive, RouterModule } fr
           </div>
         </div>
       </div>
+    </div>
     </div>
 `,
   styles:`
@@ -174,19 +168,27 @@ export class AlvyyatunJhoniComponent implements OnInit {
   isPlaying = true;
   isOlderIphone = false;
 
-  musicStatus() {
-    localStorage.setItem('shouldPlayMusic', this.isPlaying ? 'true' : 'false');
-  }
+  
 
   constructor(private readonly route: ActivatedRoute,private readonly router: Router,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
-
+  showModalPage: boolean = false;
+  musicStatus() {
+    localStorage.setItem('shouldPlayMusic', this.isPlaying ? 'true' : 'false');
+  }
+  closeModal2(): void {
+    this.musicStatus();
+    this.isPlaying = true;
+    this.showModalPage = false;
+    
+  }
   ngOnInit() {
     this.guestName = this.route.snapshot.paramMap.get('guestName');
     if (isPlatformBrowser(this.platformId)) {
       this.detectDevice();
     }
+    this.showModalPage = true;
   }
 
   detectDevice() {

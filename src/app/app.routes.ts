@@ -30,8 +30,7 @@ export const routes: Routes = [
     {
         path: ':guestName',
         children: [
-          { path: '', title: 'Jhoni & Alvyyatun', component: AlvyyatunJhoniComponent },
-          { path: 'main', title: 'Jhoni & Alvyyatun', component: AlvyyatunMainComponent },
+          { path: '', title: 'Jhoni & Alvyyatun', component: AlvyyatunMainComponent },
         ]
       },
       { path: '', component: AlvyyatunJhoniComponent, pathMatch: 'full' },
