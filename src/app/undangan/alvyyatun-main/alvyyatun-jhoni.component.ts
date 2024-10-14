@@ -33,12 +33,20 @@ import { ActivatedRoute, Router, RouterLink, RouterLinkActive, RouterModule } fr
 
             <!-- Button wrapper for better positioning -->
             <div class="relative z-20 mt-2">
+          @if (isOlderIphone) {
+            <a [href]="'https://jhonialvyyatun.kreyasi.my.id/' + guestName + '/main'"
+               class="inline-block bg-red-800 text-white px-4 py-2 rounded-full hover:bg-red-900 transition-colors duration-300 
+                      shadow-lg hover:shadow-xl transform hover:-translate-y-1 active:translate-y-0">
+              Open Invitation
+            </a>
+          } @else {
             <button (click)="openInvitation()" 
-                      class="bg-red-800 text-white px-4 py-2 rounded-full hover:bg-red-900 transition-colors duration-300 
-                             shadow-lg hover:shadow-xl transform hover:-translate-y-1 active:translate-y-0">
-                Open Invitation
-              </button>
-            </div>
+                    class="bg-red-800 text-white px-4 py-2 rounded-full hover:bg-red-900 transition-colors duration-300 
+                           shadow-lg hover:shadow-xl transform hover:-translate-y-1 active:translate-y-0">
+              Open Invitation
+            </button>
+          }
+        </div>
           </div>
 
           <!-- Frame bawah -->
@@ -183,8 +191,8 @@ export class AlvyyatunJhoniComponent implements OnInit {
 
   detectDevice() {
     const userAgent = navigator.userAgent;
-    const iphone7RegEx = /iPhone OS (7|8|9|10|11|12|13)_/i;
-    this.isOlderIphone = iphone7RegEx.test(userAgent);
+    const olderIphoneRegEx = /iPhone OS (7|8|9|10|11|12|13)_/i;
+    this.isOlderIphone = olderIphoneRegEx.test(userAgent);
   }
 
   openInvitation() {
