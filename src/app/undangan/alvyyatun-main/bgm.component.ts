@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, PLATFORM_ID, inject } from '@angular/core';
+import { Component, OnInit, OnDestroy, PLATFORM_ID, inject, NgZone } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -109,36 +109,57 @@ import { FormsModule } from '@angular/forms';
 })
 export class BackgroundMusicComponent implements OnInit, OnDestroy {
   private platformId = inject(PLATFORM_ID);
+  private ngZone = inject(NgZone);
   private audio: HTMLAudioElement | null = null;
   private visibilityHandler: (() => void) | null = null;
   private previousVolume = 1;
 
-  isPlaying = signal<boolean>(true);
+  isPlaying = signal<boolean>(false);
   volume = signal<number>(1);
   isMuted = signal<boolean>(false);
 
   ngOnInit() {
     if (isPlatformBrowser(this.platformId)) {
-      this.audio = new Audio('https://res.cloudinary.com/dxeyja0ob/video/upload/v1728487210/KEMBANG_WANGI_-_VICKY_PRASETYO_Cover_by_Surepman_1_k9roc1.mp3');
-      if (this.audio) {
-        this.audio.loop = true;
-        this.audio.volume = this.volume();
-        this.playAudio(); // Start playing immediately
-      }
+      this.ngZone.runOutsideAngular(() => {
+        this.audio = new Audio('https://res.cloudinary.com/dxeyja0ob/video/upload/v1728487210/KEMBANG_WANGI_-_VICKY_PRASETYO_Cover_by_Surepman_1_k9roc1.mp3');
+        if (this.audio) {
+          this.audio.loop = true;
+          this.audio.volume = this.volume();
+          this.audio.preload = 'auto';
+          
+          this.audio.addEventListener('canplaythrough', () => {
+            this.ngZone.run(() => {
+              this.playAudio();
+            });
+          });
+
+          this.audio.load();
+        }
+      });
 
       this.visibilityHandler = this.handleVisibilityChange.bind(this);
       document.addEventListener('visibilitychange', this.visibilityHandler);
+
+      // Add click event listener to the document
+      document.addEventListener('click', this.handleFirstInteraction.bind(this), { once: true });
     }
   }
 
   playAudio() {
-    if (this.audio) {
-      this.audio.play().catch((error) => {
-        console.log('Playback prevented:', error);
-        // If autoplay is prevented, we set isPlaying to false
-        this.isPlaying.set(false);
-      });
-      this.isPlaying.set(true);
+    if (this.audio && isPlatformBrowser(this.platformId)) {
+      const playPromise = this.audio.play();
+      if (playPromise !== undefined) {
+        playPromise.then(() => {
+          this.ngZone.run(() => {
+            this.isPlaying.set(true);
+          });
+        }).catch((error) => {
+          console.log('Playback prevented:', error);
+          this.ngZone.run(() => {
+            this.isPlaying.set(false);
+          });
+        });
+      }
     }
   }
 
@@ -199,12 +220,22 @@ export class BackgroundMusicComponent implements OnInit, OnDestroy {
     }
   }
 
+  handleFirstInteraction() {
+    if (!this.isPlaying()) {
+      this.playAudio();
+    }
+  }
+
+  // Other methods remain the same
+
   private handleVisibilityChange() {
     if (!this.audio || !isPlatformBrowser(this.platformId)) return;
 
     if (document.hidden) {
       this.audio.pause();
-      this.isPlaying.set(false);
+      this.ngZone.run(() => {
+        this.isPlaying.set(false);
+      });
     } else if (this.isPlaying()) {
       this.playAudio();
     }
