@@ -47,5 +47,16 @@
     "postcss": "^8.4.47",
     "tailwindcss": "^3.4.13",
     "typescript": "~5.5.2"
-  }
+  },
+"browserslist": [
+  "last 2 versions",
+  "> 0.5%",
+  "not dead",
+  "Firefox >= 70",
+  "Chrome >= 70",
+  "Safari >= 15",
+  "Opera >= 55",
+  "Android >= 10",
+  "iOS >= 15"
+]
 }

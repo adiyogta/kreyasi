@@ -33,8 +33,8 @@ export const routes: Routes = [
           { path: '', title: 'Jhoni & Alvyyatun', component: AlvyyatunMainComponent },
         ]
       },
-      { path: '', component: AlvyyatunJhoniComponent, pathMatch: 'full' },
+      { path: '', component: AlvyyatunMainComponent, pathMatch: 'full' },
       { path: 'list/bikin-link', title: 'Jhoni & Alvyyatun', component: GuestManagementComponent, }, // Redirect empty path to 404
-      { path: '**', component: AlvyyatunJhoniComponent } // Catch all invalid routes and redirect to 404
+      { path: '**', component: AlvyyatunMainComponent } // Catch all invalid routes and redirect to 404
       
 ];

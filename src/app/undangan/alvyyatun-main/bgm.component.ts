@@ -123,14 +123,9 @@ export class BackgroundMusicComponent implements OnInit, OnDestroy {
       if (this.audio) {
         this.audio.loop = true;
         this.audio.volume = this.volume();
+        this.playAudio(); // Start playing immediately
       }
-      this.playAudio();
 
-  
-      if (this.isPlaying()) {
-        this.playAudio();
-      }
-      this.playAudio();
       this.visibilityHandler = this.handleVisibilityChange.bind(this);
       document.addEventListener('visibilitychange', this.visibilityHandler);
     }
@@ -140,6 +135,8 @@ export class BackgroundMusicComponent implements OnInit, OnDestroy {
     if (this.audio) {
       this.audio.play().catch((error) => {
         console.log('Playback prevented:', error);
+        // If autoplay is prevented, we set isPlaying to false
+        this.isPlaying.set(false);
       });
       this.isPlaying.set(true);
     }
@@ -164,10 +161,7 @@ export class BackgroundMusicComponent implements OnInit, OnDestroy {
       this.audio.pause();
       this.isPlaying.set(false);
     } else {
-      this.audio.play().catch((error) => {
-        console.log('Playback prevented:', error);
-      });
-      this.isPlaying.set(true);
+      this.playAudio();
     }
   }
 
@@ -212,9 +206,7 @@ export class BackgroundMusicComponent implements OnInit, OnDestroy {
       this.audio.pause();
       this.isPlaying.set(false);
     } else if (this.isPlaying()) {
-      this.audio.play().catch((error) => {
-        console.log('Playback prevented:', error);
-      });
+      this.playAudio();
     }
   }
 }
