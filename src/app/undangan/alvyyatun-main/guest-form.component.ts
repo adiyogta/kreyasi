@@ -97,6 +97,8 @@ interface Guest {
       <div class="bg-white bg-card-2 p-8 rounded-lg shadow-xl max-w-md w-full mx-4">
         <h3 class="text-xl font-bold mb-4 text-[#58010F]">{{ modalTitle }}</h3>
         <p class="text-[#58010F] mb-6">{{ modalMessage }}</p>
+        <h3 class="text-lg font-bold mb-4 text-[#58010F]">Jika data berhasil di kirim tetapi tidak muncul</h3>
+        <h3 class="text-lg font-bold mb-4 text-[#58010F]">COBA REFRESH HALAMAN</h3>
         <button 
           (click)="closeModal()" 
           class="rounded font-bold py-3 px-4 rounded-lg bg-[#58010F] hover:bg-white text-white hover:text-[#58010F] transition duration-300"
@@ -173,7 +175,7 @@ export class GuestFormComponent {
   }
 
   private handleSuccess() {
-    let message = `Terima kasih, ${this.guest.nama} Data kehadiran Anda telah terkirim.`;
+    let message =`Terima kasih, ${this.guest.nama} Data kehadiran Anda telah terkirim.`;
   
   
   this.showModal('Sukses', message);
