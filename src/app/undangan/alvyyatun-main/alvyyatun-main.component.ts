@@ -51,9 +51,11 @@ export class AlvyyatunMainComponent implements OnInit, OnDestroy{
   constructor(private renderer: Renderer2,private readonly route: ActivatedRoute) {}
 
   ngAfterViewInit() {
-    if (isPlatformBrowser(this.platformId)) {
-      this.initScrollAnimation();
-    }
+    this.calculateTimeLeft();
+    this.initScrollAnimation();
+    // if (isPlatformBrowser(this.platformId)) {
+    //   this.initScrollAnimation();
+    // }
   }
 
   private initScrollAnimation() {
@@ -99,12 +101,13 @@ export class AlvyyatunMainComponent implements OnInit, OnDestroy{
 
   ngOnInit() {
     this.guestName = this.route.snapshot.paramMap.get('guestName');
-    if (isPlatformBrowser(this.platformId)) {
-      this.calculateTimeLeft();
-      this.intervalId = window.setInterval(() => {
-        this.calculateTimeLeft();
-      }, 1000);
-    }
+    // if (isPlatformBrowser(this.platformId)) {
+    //   this.calculateTimeLeft();
+    //   this.intervalId = window.setInterval(() => {
+    //     this.calculateTimeLeft();
+    //   }, 1000);
+    // }
+    this.calculateTimeLeft();
     this.showModalPage = true;
   }
 

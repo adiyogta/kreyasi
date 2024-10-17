@@ -128,28 +128,25 @@ export class GuestListComponent implements OnInit, OnDestroy {
 
   private loadGuests() {
     this.fetchGuests().pipe(
-      tap(guests => this.updateGuestList(guests)),
-      catchError(this.handleError.bind(this))
+      tap(guests => this.updateGuestList(guests))
     ).subscribe();
-  }
+}
 
-  private startAutoRefresh() {
+private startAutoRefresh() {
     this.updateSubscription = interval(5000).pipe(
       switchMap(() => this.fetchGuests()),
       catchError(error => {
         console.error('Error refreshing guests:', error);
         return of([]);
       })
-    ).subscribe(
-      guests => {
+    ).subscribe(guests => {
         this.updateGuestList(guests);
         this.error = null;
         this.cdr.detectChanges();
-      }
-    );
-  }
+    });
+}
 
-  private fetchGuests(): Observable<Guest[]> {
+private fetchGuests(): Observable<Guest[]> {
     return this.http.get<{ data: Guest[] }>(this.apiUrl).pipe(
       map(response => response.data),
       catchError(error => {
@@ -157,28 +154,27 @@ export class GuestListComponent implements OnInit, OnDestroy {
         return of([]);
       })
     );
-  }
+}
 
-  private updateGuestList(newGuests: Guest[]) {
-    const currentGuests = this.guestsSubject.getValue();
-    const updatedGuests = this.mergeGuestLists(currentGuests, newGuests);
-    this.guestsSubject.next(updatedGuests);
-  }
+private updateGuestList(newGuests: Guest[]) {
+  // Mengosongkan daftar tamu saat ini dan mengisi dengan tamu baru
+  const reversedGuests = newGuests.map(guest => ({ ...guest, timestamp: Date.now() })).reverse();
+  this.guestsSubject.next(reversedGuests);
+}
 
-  private mergeGuestLists(currentGuests: Guest[], newGuests: Guest[]): Guest[] {
+ private mergeGuestLists(currentGuests: Guest[], newGuests: Guest[]): Guest[] {
     const mergedGuests = [...currentGuests];
-
+    
     newGuests.forEach(newGuest => {
-      // Tambahkan guest baru tanpa memeriksa nama yang sama
-      mergedGuests.unshift({...newGuest, timestamp: Date.now()});
+      const existingIndex = mergedGuests.findIndex(g => g.timestamp === newGuest.timestamp);
+      if (existingIndex === -1) {
+        mergedGuests.unshift({...newGuest, timestamp: Date.now()});
+      } else {
+        mergedGuests[existingIndex] = {...newGuest, timestamp: mergedGuests[existingIndex].timestamp};
+      }
     });
 
     return mergedGuests;
-}
-
-  
-  private handleError(error: HttpErrorResponse) {
-    this.error = 'Data tidak dapat diambil. Cek koneksi Anda kembali.';
-    return of(null);
   }
+
 }
